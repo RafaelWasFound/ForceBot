@@ -1,9 +1,7 @@
 import { Client as Base, ClientOptions, Collection } from 'discord.js';
 import { readdirSync } from 'fs';
-import mongoose from 'mongoose';
 import path from 'path';
 
-import logger from '../logger';
 import Command from './command/Command';
 
 export default class ForceClient extends Base<true> {
@@ -15,7 +13,6 @@ export default class ForceClient extends Base<true> {
   }
 
   public async run(token: string): Promise<void> {
-    await this.connectToDatabase();
     this.loadCommands(process.env.NODE_ENV === 'production' ? './dist/commands/' : './src/commands/');
     this.loadEvents(process.env.NODE_ENV === 'production' ? './dist/events/' : './src/events/');
     super.login(token);
@@ -43,12 +40,5 @@ export default class ForceClient extends Base<true> {
         this.on(event.getName(), (...args) => event.run(this, ...args));
       });
     });
-  }
-
-  public async connectToDatabase(): Promise<void> {
-    mongoose
-      .connect(process.env.MONGO_URI as string)
-      .then(() => logger.info('Connected to the database.'))
-      .catch(logger.error);
   }
 }
