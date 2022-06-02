@@ -30,7 +30,7 @@
     "discord-hybrid-sharding": "^1.5.3",
     "discord.js": "^13.7.0",
     "pino": "^7.11.0",
-    "pino-pretty": "^7.6.1"
+    "pino-pretty": "^8.0.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
